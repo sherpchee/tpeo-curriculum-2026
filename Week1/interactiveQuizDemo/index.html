@@ -19,6 +19,9 @@
 
         <div class="hero-badges" aria-label="Lesson topics">
           <!-- TEMPLATE POINT 1: Introduce the technologies used in this lesson. -->
+           <span> HTML </span>
+           <span> CSS </span>
+           <span> JavaScript </span>
         </div>
       </header>
 
@@ -39,7 +42,8 @@
 
           <!-- TEMPLATE POINT 2: Give the question and answer choices semantic grouping. -->
           <form class="quiz-form" id="quiz-form">
-            <div class="question-block" id="question-block">
+            <fieldset class="question-block" id="question-block">
+                <legend class = "sr-only">Quiz Question</legend>
               <h3 id="question-text">Loading question...</h3>
               <p class="question-help" id="question-help">
                 Choose one answer to continue.
@@ -84,5 +88,6 @@
     </div>
 
     <!-- TEMPLATE POINT 3: Connect the page to its quiz behavior. -->
+    <script src = "script.js"></script>
   </body>
 </html>
