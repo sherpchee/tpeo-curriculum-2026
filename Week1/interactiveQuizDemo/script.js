@@ -88,13 +88,14 @@ function renderQuestion() {
 
 function handleSelection(event) {
   // TEMPLATE POINT 7: Respond to an answer selection and prepare it to be checked.
-  if(questionLocked){
+  if (questionLocked) {
     return;
   }
 
   selectedAnswerIndex = Number(event.target.value);
   nextButton.disabled = false;
   feedback.textContext = "Now check your answer";
+  feedback.className = "feedback";
 }
 
 function lockChoices() {
@@ -177,9 +178,6 @@ function restartQuiz() {
 }
 
 // TEMPLATE POINT 6: Connect the quiz controls to their behavior.
-nextButton.addEventListener("click", handlePrimaryAction);
-resetButton.addEventListener("click", restartQuiz);
-
 quizForm.addEventListener("submit", (event) => event.preventDefault());
 
 renderQuestion();
