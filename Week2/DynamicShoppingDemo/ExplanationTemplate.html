@@ -15,43 +15,41 @@
           <input type="text" name="item" id="item">
 
           <!-- add an onclick to the button - createListItem(), explain how to do this in html -->
-          <button onclick = "createListItem()">Add item</button>
+          <button onclick="createListItem()" onclick = "createListItem()">Add item</button>
       </div>
 
       <ul id="Shopping-List"></ul>
     </div>
 
     <script>
-
       // Step 1 
       // 1. pull the most recent version from localStorage!
       let shoppingList = JSON.parse(localStorage.getItem("shoppingList"));
 
       // 2. Handle edge case... if it's null, set to empty array
-      if(!shoppingList){
+      if(!shoppingList) {
         shoppingList = [];
       }
       // 3. else - add each item to HTML by calling addItem() for every item in the shoppingList
-      else{
+      else {
         shoppingList.forEach(item => {
-            addItem(item);
+          addItem(item)
         })
       }
+      
       // Step 2 
       // 1. Select #item - document.querySelector("#item")
       // 2. Call addItem with input value 
       // 3. Clear the input box and set the focus back to the textbox
-
       function createListItem() {
-            const input = document.querySelector("#item");
-            console.log(input.value);
+        const input = document.querySelector("#item");
+        console.log(input.value);
 
-            addItem(input.value);
+        addItem(input.value);
 
-            input.value = "";
-            input.focus();
-        }
-
+        input.value = "";
+        input.focus();
+      }
 
       //conveniently done for you!
       //manipulates HTML directly - grabs the list and pushes a new list item to it
@@ -75,23 +73,23 @@
 
         // delete button functionality
         deleteButton.addEventListener("click", ()=> {
-            list.removeChild(li);
-            shoppingList = shoppingList.filter((item => item != span.innerText));
-            localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
+          list.removeChild(li);
+          shoppingList = shoppingList.filter((item => item != span.innerText));
+          localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
         })
 
         // save button functionality
-        saveButton.addEventListener("click", ()=>{
-            console.log("Saved");
+        saveButton.addEventListener("click", ()=> {
+          console.log("Saved");
 
-            const itemExists = shoppingList.some((item) => item === text)
-            if(!itemExists){ //ensures can't save duplicate one (dosn't rlly do much though, would wanna change add button)
-                shoppingList.push(text)
-                localStorage.setItem("shoppingList", JSON.stringify(shoppingList));
-            } else {
-                console.log("Error " + text + " already exists");
-            }
-            console.log(localStorage);
+          const itemExists = shoppingList.some((item) => item === text)
+          if (!itemExists) {
+            shoppingList.push(text)
+            localStorage.setItem("shoppingList", JSON.stringify(shoppingList))
+          } else {
+            console.log("Error" + text + "already exists")
+          }
+          console.log(localStorage)
         })
 
         // Step 3 
