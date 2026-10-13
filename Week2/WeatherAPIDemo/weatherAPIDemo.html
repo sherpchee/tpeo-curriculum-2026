@@ -12,13 +12,13 @@
 		<h4 id='lat'></h4>
 		<h4 id='lon'></h4>
 		<h4 id='temp'></h4>
-		<button id='getTemp' onclick="getData()">Get Temp Jaco CR</button>
+		<button id='getTemp' onclick="getData()">Get Austin Temperature</button>
 	</div>
 </body>
 
 <script>
 		// Step 1: Add OpenWeather API key
-		const apiKey = "";
+		const apiKey = "dd125a825dd8efd923dff84df90a90df";
 
 		// Step 2: Variables to store temperature, latitude, and longitude. Think about why they are declared outside of functions.
 		let temp;
@@ -28,9 +28,28 @@
 		// Step 3: Fetches location and temperature data on button click
 		function getData() {
 			// Step 4: Built API url to fetch coordinates for location
-			let apiCall = ``;
+			let apiCall = `http://api.openweathermap.org/geo/1.0/direct?appid=${apiKey}&q=Austin,TX,US&limit=5`;
+
+            fetch(apiCall)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+
+                    lat = data[0].lat;
+                    lon = data[0].lon;
+
+                    console.log("lat: " + lat);
+                    console.log("lon: " + lon);
+                    renderLatLon();
+                    getTemp();
+
+                })
+                .catch((error)=>
+                    console.error("Error fetching loc", error))
+            
 
 			// Step 5: Make an API request to get coordinates
+
 			// Then extract latitude and longitude from the response
 
 			// Step 6: Show lat/lon on the page
@@ -40,16 +59,32 @@
 
 		// Step 8: Display latitude and longtitude on the page
 		function renderLatLon() {
+            document.querySelector("#lat").innerText = "Lat: " + lat;
+            document.querySelector("#lon").innerText = "Lon: " + lon;
 		}
 
 		// Step 9: Build API url using lat/lon to fetch temperature for that location
 		function getTemp() {
-			
+			let apiCall = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+
+            fetch(apiCall)
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    temp = data.main.temp;
+                    console.log("temp: " + temp);
+                    renderTemp();
+
+                })
+                .catch((error)=>
+                    console.error("Error fetching temp", error))
+            
+
 		}
 
         // Step 10: Display the fetched temperature on the page
 		function renderTemp() {
-		
+            document.querySelector("#temp").innerText = "Temp: " + temp + "F";
 		}
 	</script>
 </html>
