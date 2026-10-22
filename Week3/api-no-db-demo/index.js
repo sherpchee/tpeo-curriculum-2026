@@ -18,6 +18,8 @@ let nextTweetId = 3;
 // TODO 5: Require user and tweet to be non-empty strings.
 // Return a 400 JSON error for invalid input; call next() for valid input.
 const validateInput = (req, res, next) => {
+    const {user, tweet} = req.body || {};
+    if (typeof user !== "string")
   next(); // Replace this body during step 5.
 };
 
@@ -29,32 +31,47 @@ const validateTweetLength = (req, res, next) => {
 
 app.get("/", (req, res) => {
   // TODO 1: Send the text "Hello World".
-  res.status(501).json({ error: "TODO 1: root route" });
+  res.send("Hello World");
 });
 
 app.get("/api/tweets", (req, res) => {
   // TODO 2: Send the tweets array as JSON.
-  res.status(501).json({ error: "TODO 2: get all tweets" });
+  res.json(tweets);
 });
 
 app.get("/api/tweets/:user", (req, res) => {
   // TODO 3: Use req.params.user and find() to get the first matching tweet.
   // Return a 404 JSON error if there is no match; otherwise return the tweet.
-  res.status(501).json({ error: "TODO 3: get a user's tweet" });
+  const target = tweets.find((tweet) => tweet.user === req.params.user);
+  if(!target){
+    return res.status(404).json({error: "Tweet not found for user"});
+  }
+  res.jeson(target);
 });
 
-app.post("/api/tweets", validateInput, validateTweetLength, (req, res) => {
+app.post("/api/tweet", validateInput, validateTweetLength, (req, res) => {
   // TODO 4: Build a tweet with nextTweetId++, req.body.user.trim(),
   // and req.body.tweet. Push it into tweets, then return it with status 201.
   // Start with valid input; steps 5-6 add validation in the middleware above.
   res.status(501).json({ error: "TODO 4: create a tweet" });
+
 });
 
 app.delete("/api/tweets", (req, res) => {
   // TODO 7: Require an integer req.body.id (400 otherwise).
   // Find its array index with findIndex(). Return 404 if it is missing.
   // Remove it with splice() and return the removed tweet as JSON.
-  res.status(501).json({ error: "TODO 7: delete a tweet" });
+  const {id} = req.body || {};
+  if(!Number.isInteger(id)){
+    return res.status(400).json({error: "id must be integer"});
+  }
+
+  const tweetIndex = tweets.findIndex((tweet) => tweet.id === id);
+  if(tweetIndex === -1) {
+    return res.status(404).jeson({error: "something"})
+  }
+  
+
 });
 
 const port = process.env.PORT || 3000;
