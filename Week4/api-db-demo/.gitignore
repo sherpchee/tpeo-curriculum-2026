@@ -1,0 +1,11 @@
+# dependencies
+/node_modules
+
+# local environment settings
+.env
+.env.*
+!.env.example
+
+#don't store your cred.json on your remote repo
+cred.json
+*-firebase-adminsdk-*.json
